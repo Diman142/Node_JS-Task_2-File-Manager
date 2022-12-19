@@ -11,6 +11,7 @@ import { osInfo } from './os.js';
 import { rn } from './rn.js';
 import { calculateHash } from './hash.js';
 import { compress } from './compress.js'
+import { decompress } from './decompress.js'
 
 const asyncCommandProcceser = (func) => async (...arg) => {
     try {
@@ -67,6 +68,10 @@ const applyCommand = async (commandFromConsole, currentPath) => {
         case 'compress':
             const isArgumentToCompess = checkArguments(parsedCommand, 2);
             await compress(parsedCommand[1], parsedCommand[2], currentPath, isArgumentToCompess);
+            return currentPath;
+        case 'decompress':
+            const isArgumentToDecompress = checkArguments(parsedCommand, 2);
+            await decompress(parsedCommand[1], parsedCommand[2], currentPath, isArgumentToDecompress)
             return currentPath;
         case '.exit':
             process.exit();
