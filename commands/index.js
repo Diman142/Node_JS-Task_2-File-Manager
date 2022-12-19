@@ -7,8 +7,9 @@ import { rm } from './rm.js'
 import { parseCommand, checkArguments } from '../utils.js';
 import { stdout } from "node:process";
 import { cp as copy } from './cp.js';
-import { osInfo } from './os.js'
-import { rn } from './rn.js'
+import { osInfo } from './os.js';
+import { rn } from './rn.js';
+import { calculateHash } from './hash.js'
 
 const asyncCommandProcceser = (func) => async (...arg) => {
     try {
@@ -58,12 +59,14 @@ const applyCommand = async (commandFromConsole, currentPath) => {
             const flag = checkArguments(parsedCommand) ? parsedCommand[1] : '';
             osInfo(flag)
             return currentPath
-        case 'rn':
-
+        case 'hash':
+            const fileToCalculateHash = checkArguments(parsedCommand) ? parsedCommand[1] : ''
+            await asyncCommandProcceser(calculateHash)(fileToCalculateHash, currentPath);
+            return currentPath;
         case '.exit':
             process.exit();
         default:
-            process.stdout.write('Invalid input \n');
+            process.stdout.write('Invalid input\n');
             return currentPath;
     }
 }
