@@ -1,0 +1,21 @@
+{
+  "name": "node_js-task_2-file-manager",
+  "version": "1.0.0",
+  "description": "Task 2 by Rolling Scopes school. CLI File manager",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Diman142/Node_JS-Task_2-File-Manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Diman142/Node_JS-Task_2-File-Manager/issues"
+  },
+  "homepage": "https://github.com/Diman142/Node_JS-Task_2-File-Manager#readme"
+}
