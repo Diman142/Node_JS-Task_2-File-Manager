@@ -9,7 +9,8 @@ import { stdout } from "node:process";
 import { cp as copy } from './cp.js';
 import { osInfo } from './os.js';
 import { rn } from './rn.js';
-import { calculateHash } from './hash.js'
+import { calculateHash } from './hash.js';
+import { compress } from './compress.js'
 
 const asyncCommandProcceser = (func) => async (...arg) => {
     try {
@@ -49,19 +50,23 @@ const applyCommand = async (commandFromConsole, currentPath) => {
             return currentPath;
         case 'cp':
             const isArgumentsForCPExist = checkArguments(parsedCommand, 2)
-            await asyncCommandProcceser(copy)(parsedCommand[1], parsedCommand[2], currentPath, isArgumentsForCPExist)
-            return currentPath
+            await asyncCommandProcceser(copy)(parsedCommand[1], parsedCommand[2], currentPath, isArgumentsForCPExist);
+            return currentPath;
         case 'rn':
             const isArgumentForRNExist = checkArguments(parsedCommand, 2)
-            await asyncCommandProcceser(rn)(parsedCommand[1], parsedCommand[2], currentPath, isArgumentForRNExist)
-            return currentPath
+            await asyncCommandProcceser(rn)(parsedCommand[1], parsedCommand[2], currentPath, isArgumentForRNExist);
+            return currentPath;
         case 'os':
             const flag = checkArguments(parsedCommand) ? parsedCommand[1] : '';
             osInfo(flag)
-            return currentPath
+            return currentPath;
         case 'hash':
             const fileToCalculateHash = checkArguments(parsedCommand) ? parsedCommand[1] : ''
             await asyncCommandProcceser(calculateHash)(fileToCalculateHash, currentPath);
+            return currentPath;
+        case 'compress':
+            const isArgumentToCompess = checkArguments(parsedCommand, 2);
+            await compress(parsedCommand[1], parsedCommand[2], currentPath, isArgumentToCompess);
             return currentPath;
         case '.exit':
             process.exit();
