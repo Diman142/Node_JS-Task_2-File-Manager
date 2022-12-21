@@ -12,6 +12,7 @@ import { rn } from './rn.js';
 import { calculateHash } from './hash.js';
 import { compress } from './compress.js'
 import { decompress } from './decompress.js'
+import { move } from './move.js'
 
 const asyncCommandProcceser = (func) => async (...arg) => {
     try {
@@ -50,16 +51,20 @@ const applyCommand = async (commandFromConsole, currentPath) => {
             await asyncCommandProcceser(rm)(currentPath, fileToRemove);
             return currentPath;
         case 'cp':
-            const isArgumentsForCPExist = checkArguments(parsedCommand, 2)
+            const isArgumentsForCPExist = checkArguments(parsedCommand, 2);
             await asyncCommandProcceser(copy)(parsedCommand[1], parsedCommand[2], currentPath, isArgumentsForCPExist);
             return currentPath;
         case 'rn':
-            const isArgumentForRNExist = checkArguments(parsedCommand, 2)
+            const isArgumentForRNExist = checkArguments(parsedCommand, 2);
             await asyncCommandProcceser(rn)(parsedCommand[1], parsedCommand[2], currentPath, isArgumentForRNExist);
+            return currentPath;
+        case 'mv':
+            const isArgumentForMoveExist = checkArguments(parsedCommand, 2);
+            await move(parsedCommand[1], parsedCommand[2], currentPath, isArgumentForMoveExist);
             return currentPath;
         case 'os':
             const flag = checkArguments(parsedCommand) ? parsedCommand[1] : '';
-            osInfo(flag)
+            osInfo(flag);
             return currentPath;
         case 'hash':
             const fileToCalculateHash = checkArguments(parsedCommand) ? parsedCommand[1] : ''
@@ -67,11 +72,11 @@ const applyCommand = async (commandFromConsole, currentPath) => {
             return currentPath;
         case 'compress':
             const isArgumentToCompess = checkArguments(parsedCommand, 2);
-            await compress(parsedCommand[1], parsedCommand[2], currentPath, isArgumentToCompess);
+            await asyncCommandProcceser(compress)(parsedCommand[1], parsedCommand[2], currentPath, isArgumentToCompess);
             return currentPath;
         case 'decompress':
             const isArgumentToDecompress = checkArguments(parsedCommand, 2);
-            await decompress(parsedCommand[1], parsedCommand[2], currentPath, isArgumentToDecompress)
+            await asyncCommandProcceser(decompress)(parsedCommand[1], parsedCommand[2], currentPath, isArgumentToDecompress)
             return currentPath;
         case '.exit':
             process.exit();
@@ -81,4 +86,4 @@ const applyCommand = async (commandFromConsole, currentPath) => {
     }
 }
 
-export default applyCommand
+export default applyCommand;

@@ -3,7 +3,6 @@ import { rm as removeFile } from 'node:fs/promises';
 
 export const rm = async (path, fileName) => {
     const pathToRemove = pathJoin(path, fileName)
-    console.log('pathToRemove', pathToRemove)
     try {
         await removeFile(pathToRemove);
     } catch (error) {

@@ -4,10 +4,10 @@ import { stdout } from "node:process";
 export const osInfo = async (flag) => {
     switch (flag) {
         case '--EOL':
-            stdout.write(EOL);
+            stdout.write(`${JSON.stringify(EOL)}\n`);
             break;
         case '--cpus':
-            cpus().forEach(cpu => stdout.write(`${JSON.stringify(cpu)}\n`))
+            cpus().forEach(cpu => stdout.write(`${cpu.model} rate: ${cpu.speed / 1000} GHz\n`))
             break;
         case '--homedir':
             stdout.write(`${homedir()}\n`);

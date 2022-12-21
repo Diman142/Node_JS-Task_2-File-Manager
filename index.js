@@ -1,16 +1,16 @@
 import { argv } from "node:process";
-import { fileURLToPath } from "node:url";
-import { dirname, join, resolve } from "node:path";
+// import { fileURLToPath } from "node:url";
+// import { dirname, join, resolve } from "node:path";
 import { stdin, stdout } from "node:process";
 import { homedir } from 'os'
 import { prepareUserName } from "./utils.js";
 import applyCommand from './commands/index.js'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const src = join(__dirname);
-let currentPath = resolve(src).toString();
-// let currentPath = homedir().toString();
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
+// const src = join(__dirname);
+// let currentPath = resolve(src).toString();
+let currentPath = homedir().toString();
 
 const main = async () => {
   argv.forEach((arg) => {
@@ -26,11 +26,12 @@ const main = async () => {
 
       process.on('exit', () => {
         stdout.write(`Thank you for using File Manager, ${userName}, goodbye!`);
+        return
       })
 
       // process.on('SIGINT', () => {
       //   stdout.write(`Thank you for using File Manager, ${userName}, goodbye!`);
-      //   process.exit(1)
+      //   return
       // })
     }
   });
